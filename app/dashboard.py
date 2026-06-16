@@ -14,294 +14,95 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# Custom CSS for Premium SaaS Aesthetics
+# 1. Global Theme CSS
 st.markdown("""
 <style>
-    @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
-    
-    /* Global Overrides */
-    html, body, [class*="css"] {
-        font-family: 'Plus Jakarta Sans', sans-serif;
-        color: #F1F5F9;
-    }
-    
-    .main .block-container {
-        padding-top: 1.5rem;
-        padding-bottom: 2rem;
-        max-width: 1300px;
-    }
-    
-    h1, h2, h3, .title-style {
-        font-family: 'Outfit', sans-serif;
-        font-weight: 700;
-        letter-spacing: -0.02em;
-    }
-    
-    /* Premium Title Section */
-    .title-container {
-        background: linear-gradient(135deg, rgba(30, 41, 59, 0.45), rgba(15, 23, 42, 0.55));
-        border: 1px solid rgba(255, 255, 255, 0.08);
-        border-radius: 20px;
-        padding: 2rem;
-        margin-bottom: 2rem;
-        box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.25);
-        backdrop-filter: blur(12px);
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        flex-wrap: wrap;
-        gap: 1rem;
-    }
-    
-    .title-left {
-        flex: 1;
-        min-width: 300px;
-    }
-    
-    .gradient-title {
-        background: linear-gradient(135deg, #818CF8 0%, #C084FC 50%, #F472B6 100%);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        font-size: 2.6rem;
-        font-weight: 800;
-        margin: 0;
-        letter-spacing: -0.03em;
-    }
-    
-    .subtitle {
-        color: #94A3B8;
-        font-size: 1.05rem;
-        margin-top: 0.4rem;
-        font-weight: 400;
-        line-height: 1.4;
-    }
-    
-    /* Live Status Badge */
-    .status-badge {
-        display: flex;
-        align-items: center;
-        gap: 0.6rem;
-        background: rgba(16, 185, 129, 0.08);
-        border: 1px solid rgba(16, 185, 129, 0.2);
-        padding: 0.5rem 1rem;
-        border-radius: 9999px;
-        font-family: 'Outfit', sans-serif;
-        font-size: 0.85rem;
-        font-weight: 600;
-        color: #34D399;
-        box-shadow: 0 0 15px rgba(16, 185, 129, 0.05);
-    }
-    
-    .pulse-dot {
-        width: 8px;
-        height: 8px;
-        background-color: #10B981;
-        border-radius: 50%;
-        box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
-        animation: pulse 1.6s infinite;
-    }
-    
-    @keyframes pulse {
-        0% {
-            transform: scale(0.95);
-            box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
-        }
-        70% {
-            transform: scale(1);
-            box-shadow: 0 0 0 8px rgba(16, 185, 129, 0);
-        }
-        100% {
-            transform: scale(0.95);
-            box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
-        }
-    }
-    
-    /* Glassmorphic Cards */
-    .glass-card {
-        background: linear-gradient(135deg, rgba(30, 41, 59, 0.55) 0%, rgba(15, 23, 42, 0.65) 100%);
-        backdrop-filter: blur(16px);
-        -webkit-backdrop-filter: blur(16px);
-        border: 1px solid rgba(255, 255, 255, 0.07);
-        border-radius: 16px;
-        padding: 1.5rem;
-        box-shadow: 0 10px 30px 0 rgba(0, 0, 0, 0.2);
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        position: relative;
-        overflow: hidden;
-    }
-    
-    .glass-card::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 4px;
-        background: transparent;
-        transition: background 0.3s ease;
-    }
-    
-    .glass-card.vol-card::before { background: #6366F1; }
-    .glass-card.growth-card::before { background: #10B981; }
-    .glass-card.ticket-card::before { background: #A855F7; }
-    .glass-card.categories-card::before { background: #FB7185; }
-    
-    .glass-card:hover {
-        transform: translateY(-4px);
-        border-color: rgba(255, 255, 255, 0.12);
-        box-shadow: 0 20px 40px 0 rgba(0, 0, 0, 0.3);
-    }
-    
-    /* KPI Metrics Styling */
-    .kpi-label {
-        color: #94A3B8;
-        font-size: 0.8rem;
-        font-weight: 600;
-        text-transform: uppercase;
-        letter-spacing: 0.05em;
-    }
-    
-    .kpi-value {
-        color: #F8FAFC;
-        font-size: 2.2rem;
-        font-weight: 700;
-        font-family: 'Outfit', sans-serif;
-        margin: 0.4rem 0;
-        letter-spacing: -0.02em;
-    }
-    
-    .kpi-delta {
-        font-size: 0.85rem;
-        font-weight: 600;
-        display: flex;
-        align-items: center;
-        gap: 0.3rem;
-    }
-    
-    .delta-up {
-        color: #34D399;
-    }
-    
-    .delta-down {
-        color: #F87171;
-    }
-    
-    /* Insight Cards Section */
-    .insight-card {
-        background: linear-gradient(135deg, rgba(30, 41, 59, 0.45) 0%, rgba(15, 23, 42, 0.55) 100%);
-        border-left: 4px solid #6366F1;
-        border-radius: 12px;
-        padding: 1.2rem;
-        margin-bottom: 1rem;
-        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
-        transition: transform 0.2s ease, border-color 0.2s ease;
-        border-top: 1px solid rgba(255, 255, 255, 0.03);
-        border-right: 1px solid rgba(255, 255, 255, 0.03);
-        border-bottom: 1px solid rgba(255, 255, 255, 0.03);
-    }
-    
-    .insight-card:hover {
-        transform: scale(1.01);
-        border-right-color: rgba(255, 255, 255, 0.08);
-    }
-    
-    .insight-card.travel { border-left-color: #818CF8; }
-    .insight-card.grocery { border-left-color: #34D399; }
-    .insight-card.insurance { border-left-color: #C084FC; }
-    .insight-card.education { border-left-color: #FB7185; }
-    .insight-card.utilities { border-left-color: #F59E0B; }
-    
-    .insight-title {
-        font-family: 'Outfit', sans-serif;
-        font-weight: 600;
-        font-size: 1.05rem;
-        color: #F8FAFC;
-        margin-bottom: 0.4rem;
-        display: flex;
-        align-items: center;
-        gap: 0.4rem;
-    }
-    
-    .insight-body {
-        color: #CBD5E1;
-        font-size: 0.9rem;
-        line-height: 1.5;
-    }
-    
-    .insight-source {
-        color: #64748B;
-        font-size: 0.75rem;
-        margin-top: 0.6rem;
-        font-style: italic;
-    }
-    
-    /* Custom Tabs Styling */
-    .stTabs [data-baseweb="tab-list"] {
-        gap: 24px;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-        padding-bottom: 0px;
-    }
-    
-    .stTabs [data-baseweb="tab"] {
-        height: 48px;
-        background-color: transparent !important;
-        border: none !important;
-        color: #94A3B8 !important;
-        font-family: 'Outfit', sans-serif;
-        font-size: 1rem;
-        font-weight: 500;
-        padding: 0 8px;
-        transition: all 0.2s ease;
-    }
-    
-    .stTabs [data-baseweb="tab"]:hover {
-        color: #F8FAFC !important;
-    }
-    
-    .stTabs [aria-selected="true"] {
-        color: #818CF8 !important;
-        font-weight: 600;
-    }
-    
-    /* Custom Intelligence Banner */
-    .insight-banner {
-        display: flex;
-        align-items: flex-start;
-        gap: 1rem;
-        background: linear-gradient(135deg, rgba(99, 102, 241, 0.08) 0%, rgba(192, 132, 252, 0.04) 100%);
-        border: 1px solid rgba(99, 102, 241, 0.16);
-        border-radius: 14px;
-        padding: 1.2rem 1.5rem;
-        margin-bottom: 2rem;
-        backdrop-filter: blur(8px);
-        box-shadow: 0 8px 30px rgba(99, 102, 241, 0.05);
-    }
-    
-    .banner-icon {
-        font-size: 1.6rem;
-        line-height: 1;
-        margin-top: 0.1rem;
-    }
-    
-    .banner-content {
-        flex: 1;
-    }
-    
-    .banner-title {
-        font-family: 'Outfit', sans-serif;
-        font-weight: 600;
-        font-size: 0.85rem;
-        color: #818CF8;
-        text-transform: uppercase;
-        letter-spacing: 0.06em;
-        margin-bottom: 0.3rem;
-    }
-    
-    .banner-body {
-        color: #E2E8F0;
-        font-size: 1rem;
-        line-height: 1.55;
-    }
+[data-testid="stAppViewContainer"] { background: #0F1117; }
+[data-testid="stSidebar"] { background: #0D1020; border-right: 1px solid #1A2030; }
+[data-testid="stSidebarContent"] { padding-top: 1.5rem; }
+h1, h2, h3 { color: #E8E4DC !important; font-weight: 500 !important; }
+p, li, label { color: #7A8094 !important; }
+[data-testid="stMetric"] { background: #161B27; border: 0.5px solid #252D3D; border-radius: 8px; padding: 14px 16px; border-top: 2px solid #C4A96E; }
+[data-testid="stMetric"] label { color: #5A6480 !important; font-size: 10px !important; letter-spacing: 0.06em; text-transform: uppercase; }
+[data-testid="stMetricValue"] { color: #E8E4DC !important; font-size: 20px !important; font-weight: 500 !important; }
+[data-testid="stMetricDelta"] { color: #5AC87A !important; font-size: 11px !important; }
+[data-testid="stTabs"] [data-baseweb="tab"] { color: #5A6480; font-size: 13px; }
+[data-testid="stTabs"] [aria-selected="true"] { color: #C4A96E !important; border-bottom-color: #C4A96E !important; }
+[data-testid="stSidebar"] h1, [data-testid="stSidebar"] h2, [data-testid="stSidebar"] h3 { color: #C4A96E !important; font-size: 13px !important; }
+[data-testid="stSidebar"] p, [data-testid="stSidebar"] li { font-size: 12px !important; color: #5A6480 !important; }
+
+/* Custom helper classes for HTML tags */
+.insight-card {
+    background: #161B27;
+    border-left: 4px solid #C4A96E;
+    border-radius: 8px;
+    padding: 1.2rem;
+    margin-bottom: 1rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    border-top: 1px solid #1A2030;
+    border-right: 1px solid #1A2030;
+    border-bottom: 1px solid #1A2030;
+}
+.insight-card.travel { border-left-color: #818CF8; }
+.insight-card.grocery { border-left-color: #34D399; }
+.insight-card.insurance { border-left-color: #C084FC; }
+
+.insight-title {
+    font-weight: 600;
+    font-size: 1rem;
+    color: #E8E4DC;
+    margin-bottom: 0.4rem;
+}
+
+.insight-body {
+    color: #7A8094;
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
+
+.insight-source {
+    color: #5A6480;
+    font-size: 0.75rem;
+    margin-top: 0.6rem;
+    font-style: italic;
+}
+
+.insight-banner {
+    background: #161B27;
+    border: 1px solid #252D3D;
+    border-top: 2px solid #C4A96E;
+    border-radius: 8px;
+    padding: 1.2rem 1.5rem;
+    margin-bottom: 2rem;
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+}
+
+.banner-icon {
+    font-size: 1.6rem;
+    line-height: 1;
+    margin-top: 0.1rem;
+}
+
+.banner-content {
+    flex: 1;
+}
+
+.banner-title {
+    font-weight: 600;
+    font-size: 0.85rem;
+    color: #C4A96E;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 0.3rem;
+}
+
+.banner-body {
+    color: #E8E4DC;
+    font-size: 1rem;
+    line-height: 1.55;
+}
 </style>
 """, unsafe_allow_html=True)
 
@@ -352,109 +153,86 @@ with st.sidebar:
     
     st.write("---")
     
-    st.markdown(f"""
-    ### 📂 Dataset Profile
-    - **Data Span:** Jan 2022 – {latest_month.strftime('%b %Y')}
-    - **Frequency:** Monthly aggregates
-    - **Cleaned Files:** 52 monthly reports
-    - **Coverage:** {active_categories} standard merchant segments
-    """, unsafe_allow_html=True)
-    
+    # Dataset Profile in expander
+    with st.expander("Dataset profile", expanded=False):
+        st.markdown(f"""
+        - **Data Span:** Jan 2022 – {latest_month.strftime('%b %Y')}
+        - **Frequency:** Monthly aggregates
+        - **Cleaned Files:** 52 monthly reports
+        - **Coverage:** {active_categories} standard merchant segments
+        """)
+        
+    # Plain text Momentum Score description (no st.latex)
+    st.info("""
+**Momentum Score** measures how fast a category is growing relative to the UPI network overall.
+
+Score > 1.0 → category outpacing UPI  
+Score < 1.0 → category lagging UPI  
+
+Formula: Category 3M growth ÷ Network 3M growth
+""")
+
     st.markdown("""
-    ### ⚙️ Momentum Score
-    Measures category-specific growth velocity relative to the total UPI network growth rate:
-    
-    $$\\text{Velocity Score} = \\frac{\\Delta \\text{ Category Vol }}{\\Delta \\text{ Network Vol }}$$
-    
-    - **Score > 1.0:** Growing faster than the network (Outperforming)
-    - **Score = 1.0:** Parity with overall growth rate
-    - **Score < 1.0:** Lagging overall network velocity
-    
     ### 👤 Publisher
     *Sai Krishna A Ramu*  
     *Portfolio Project*
-    """, unsafe_allow_html=True)
+    """)
 
-# ----------------- PREMIUM HEADER BLOCK -----------------
+# 2. Header Block
 st.markdown(f"""
-<div class="title-container">
-    <div class="title-left">
-        <h1 class="gradient-title">UPI Merchant Category Pulse</h1>
-        <div class="subtitle">Surfacing micro-consumer trends and category growth dynamics across India's payment ecosystem</div>
-    </div>
-    <div class="status-badge">
-        <span class="pulse-dot"></span>
-        <span>LIVE UPDATES: {latest_month.strftime('%B %Y')}</span>
-    </div>
+<div style="background:#0F1117; padding:1.5rem 0 1rem 0; border-bottom:1px solid #1A2030; margin-bottom:1.5rem;">
+  <p style="font-size:11px; font-weight:500; color:#C4A96E; letter-spacing:0.1em; text-transform:uppercase; margin-bottom:6px;">NPCI · RBI · Public Data</p>
+  <h1 style="font-size:28px; font-weight:500; color:#E8E4DC; margin:0 0 6px 0;">UPI Merchant Category Pulse</h1>
+  <p style="font-size:14px; color:#5A6480; margin:0 0 10px 0;">Category growth velocity across India's P2M ecosystem</p>
+  <span style="font-size:11px; font-weight:500; background:#1A2A1A; color:#5AC87A; border:0.5px solid #2D4A2D; border-radius:20px; padding:3px 12px;">
+    Data through {latest_month.strftime('%B %Y')}
+  </span>
 </div>
 """, unsafe_allow_html=True)
 
 # ----------------- SECTION A: MARKET OVERVIEW (KPI CARDS) -----------------
+# 3. KPI Cards - Streamlit native metrics styled via global CSS
 col1, col2, col3, col4 = st.columns(4)
 
 with col1:
-    st.markdown(f"""
-    <div class="glass-card vol-card">
-        <div class="kpi-label">Latest Month Volume</div>
-        <div class="kpi-value">{(total_vol_latest / 1_000_000_000):.2f} B</div>
-        <div class="kpi-delta delta-up">⚡ P2M Txns</div>
-    </div>
-    """, unsafe_allow_html=True)
+    st.metric(
+        label="Latest Month Volume",
+        value=f"{(total_vol_latest / 1_000_000_000):.2f} B"
+    )
 
 with col2:
-    st.markdown(f"""
-    <div class="glass-card growth-card">
-        <div class="kpi-label">Network YoY Volume Growth</div>
-        <div class="kpi-value">+{global_yoy_vol_growth:.1f}%</div>
-        <div class="kpi-delta delta-up">▲ vs. Prior Year</div>
-    </div>
-    """, unsafe_allow_html=True)
+    st.metric(
+        label="Network YoY Volume Growth",
+        value=f"{global_yoy_vol_growth:+.1f}%"
+    )
 
 with col3:
-    st.markdown(f"""
-    <div class="glass-card ticket-card">
-        <div class="kpi-label">Network Average Ticket</div>
-        <div class="kpi-value">₹{global_avg_ticket:.2f}</div>
-        <div class="kpi-delta {'delta-up' if global_avg_ticket_delta >= 0 else 'delta-down'}">
-            {'▲' if global_avg_ticket_delta >= 0 else '▼'} {abs(global_avg_ticket_delta):.1f}% YoY
-        </div>
-    </div>
-    """, unsafe_allow_html=True)
+    st.metric(
+        label="Network Average Ticket",
+        value=f"₹{global_avg_ticket:.2f}",
+        delta=f"{global_avg_ticket_delta:+.1f}% YoY"
+    )
 
 with col4:
-    st.markdown(f"""
-    <div class="glass-card categories-card">
-        <div class="kpi-label">Active Categories</div>
-        <div class="kpi-value">{active_categories}</div>
-        <div class="kpi-delta delta-up">● Standardized MCCs</div>
-    </div>
-    """, unsafe_allow_html=True)
+    st.metric(
+        label="Active Categories",
+        value=f"{active_categories}"
+    )
 
 st.write("")
 
 # ----------------- PLOTLY BEAUTIFICATION HELPER -----------------
+# 5. Chart Styling
 def style_plotly_fig(fig):
     fig.update_layout(
-        font=dict(family="Plus Jakarta Sans, sans-serif", color="#F8FAFC"),
-        hoverlabel=dict(
-            bgcolor="#0F172A",
-            bordercolor="rgba(255,255,255,0.1)",
-            font=dict(family="Plus Jakarta Sans, sans-serif", size=13, color="#F8FAFC")
-        ),
-        paper_bgcolor="rgba(0,0,0,0)",
-        plot_bgcolor="rgba(0,0,0,0)",
-    )
-    fig.update_xaxes(
-        gridcolor="rgba(255, 255, 255, 0.05)",
-        linecolor="rgba(255, 255, 255, 0.1)",
-        tickfont=dict(color="#94A3B8"),
-        title=dict(font=dict(color="#F8FAFC"))
-    )
-    fig.update_yaxes(
-        gridcolor="rgba(255, 255, 255, 0.05)",
-        linecolor="rgba(255, 255, 255, 0.1)",
-        tickfont=dict(color="#94A3B8"),
-        title=dict(font=dict(color="#F8FAFC"))
+        paper_bgcolor="#0D1020",
+        plot_bgcolor="#0D1020",
+        font=dict(family="Inter, sans-serif", color="#7A8094", size=12),
+        title_font=dict(color="#E8E4DC", size=14, family="Inter, sans-serif"),
+        xaxis=dict(gridcolor="#1A2030", linecolor="#1A2030", tickfont=dict(color="#5A6480")),
+        yaxis=dict(gridcolor="#1A2030", linecolor="#1A2030", tickfont=dict(color="#5A6480")),
+        margin=dict(t=40, b=40, l=20, r=20),
+        legend=dict(bgcolor="#161B27", bordercolor="#252D3D", borderwidth=1, font=dict(color="#7A8094"))
     )
     return fig
 
@@ -548,6 +326,8 @@ with tab_overview:
         )
         style_plotly_fig(fig_network)
         st.plotly_chart(fig_network, use_container_width=True)
+        # 6. Chart Footers
+        st.caption("Source: NPCI UPI Ecosystem Statistics + RBI DBIE Portal")
         
     with col_right:
         st.markdown("### 💡 Key Spending Insights")
@@ -636,16 +416,15 @@ with tab_leaderboard:
         x_label = "YoY Growth Rate %"
         hover_template = "<b>%{y}</b><br>YoY Growth: %{x:.1f}%<br>Momentum: %{customdata[4]:.2f}"
         
+    # Apply styling rule: #C4A96E for positive (score >= 1.0), #E05A5A for negative (score < 1.0)
     colors = []
     for val in leaderboard_df[f"momentum_score_{window_suffix}"]:
         if pd.isna(val):
-            colors.append("#64748B")
-        elif val > 1.5:
-            colors.append("#10B981") # emerald
-        elif val >= 0.8:
-            colors.append("#F59E0B") # amber
+            colors.append("#5A6480")
+        elif val >= 1.0:
+            colors.append("#C4A96E")
         else:
-            colors.append("#EF4444") # red
+            colors.append("#E05A5A")
             
     fig_lead = go.Figure(go.Bar(
         x=leaderboard_df[sort_col] if "Growth" not in sort_by else leaderboard_df["yoy_growth_pct"],
@@ -672,6 +451,8 @@ with tab_leaderboard:
     )
     style_plotly_fig(fig_lead)
     st.plotly_chart(fig_lead, use_container_width=True)
+    # 6. Chart Footers
+    st.caption("Source: NPCI UPI Ecosystem Statistics + RBI DBIE Portal")
 
 # ----------------- TAB 3: CATEGORY DEEP DIVE -----------------
 with tab_deepdive:
@@ -760,6 +541,8 @@ with tab_deepdive:
         )
         style_plotly_fig(fig_vol)
         st.plotly_chart(fig_vol, use_container_width=True)
+        # 6. Chart Footers
+        st.caption("Source: NPCI UPI Ecosystem Statistics + RBI DBIE Portal")
     
         # Chart 2: Average Ticket Size Trend
         fig_ticket = px.line(cat_df, x="month", y="avg_ticket",
@@ -772,6 +555,8 @@ with tab_deepdive:
         )
         style_plotly_fig(fig_ticket)
         st.plotly_chart(fig_ticket, use_container_width=True)
+        # 6. Chart Footers
+        st.caption("Source: NPCI UPI Ecosystem Statistics + RBI DBIE Portal")
     
     with dcol2:
         # Chart 3: Value Trend
@@ -785,6 +570,8 @@ with tab_deepdive:
         )
         style_plotly_fig(fig_val)
         st.plotly_chart(fig_val, use_container_width=True)
+        # 6. Chart Footers
+        st.caption("Source: NPCI UPI Ecosystem Statistics + RBI DBIE Portal")
     
         # Chart 4: Volume Share % over time
         fig_share_t = px.line(cat_df, x="month", y="volume_share_pct",
@@ -797,6 +584,8 @@ with tab_deepdive:
         )
         style_plotly_fig(fig_share_t)
         st.plotly_chart(fig_share_t, use_container_width=True)
+        # 6. Chart Footers
+        st.caption("Source: NPCI UPI Ecosystem Statistics + RBI DBIE Portal")
         
     st.write("")
     
@@ -816,6 +605,8 @@ with tab_deepdive:
     )
     style_plotly_fig(fig_overlay)
     st.plotly_chart(fig_overlay, use_container_width=True)
+    # 6. Chart Footers
+    st.caption("Source: NPCI UPI Ecosystem Statistics + RBI DBIE Portal")
 
 # Footer
 st.markdown("""
