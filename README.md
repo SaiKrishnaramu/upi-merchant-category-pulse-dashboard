@@ -19,7 +19,6 @@ This dashboard addresses that visibility gap. By analyzing monthly category-leve
 ### Data Sources
 *   **NPCI UPI Product Statistics:** Monthly MCC-category-wise transaction volume and value. [NPCI Product Statistics Portal](https://www.npci.org.in/what-we-do/upi/product-statistics)
 *   **NPCI Archives:** Historical Excel files going back 3 years. [NPCI Archives](https://www.npci.org.in/what-we-do/upi/upi-ecosystem-statistics/archives)
-*   **RBI DBIE Portal:** Baseline data for overall payment system indicators. [RBI DBIE Portal](https://dbie.rbi.org.in)
 
 ### Engineering Challenges
 *   **Category Label Drift:** NPCI changes category labels across monthly releases (e.g., "Food & Beverages" becomes "F&B" or "Food Delivery" depending on the month). The ingestion pipeline maps these variations using a robust category mapping dictionary.

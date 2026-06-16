@@ -319,7 +319,7 @@ with tab_overview:
         style_plotly_fig(fig_network)
         st.plotly_chart(fig_network, use_container_width=True)
         # 6. Chart Footers
-        st.caption("Source: NPCI UPI Ecosystem Statistics + RBI DBIE Portal")
+        st.caption("Source: NPCI UPI Ecosystem Statistics")
         
     with col_right:
         st.markdown("### Key Spending Insights")
@@ -444,7 +444,7 @@ with tab_leaderboard:
     style_plotly_fig(fig_lead)
     st.plotly_chart(fig_lead, use_container_width=True)
     # 6. Chart Footers
-    st.caption("Source: NPCI UPI Ecosystem Statistics + RBI DBIE Portal")
+    st.caption("Source: NPCI UPI Ecosystem Statistics")
 
 # ----------------- TAB 3: CATEGORY DEEP DIVE -----------------
 with tab_deepdive:
@@ -533,7 +533,7 @@ with tab_deepdive:
         style_plotly_fig(fig_vol)
         st.plotly_chart(fig_vol, use_container_width=True)
         # 6. Chart Footers
-        st.caption("Source: NPCI UPI Ecosystem Statistics + RBI DBIE Portal")
+        st.caption("Source: NPCI UPI Ecosystem Statistics")
     
         # Chart 2: Average Ticket Size Trend
         fig_ticket = px.line(cat_df, x="month", y="avg_ticket",
@@ -547,7 +547,7 @@ with tab_deepdive:
         style_plotly_fig(fig_ticket)
         st.plotly_chart(fig_ticket, use_container_width=True)
         # 6. Chart Footers
-        st.caption("Source: NPCI UPI Ecosystem Statistics + RBI DBIE Portal")
+        st.caption("Source: NPCI UPI Ecosystem Statistics")
     
     with dcol2:
         # Chart 3: Value Trend
@@ -562,7 +562,7 @@ with tab_deepdive:
         style_plotly_fig(fig_val)
         st.plotly_chart(fig_val, use_container_width=True)
         # 6. Chart Footers
-        st.caption("Source: NPCI UPI Ecosystem Statistics + RBI DBIE Portal")
+        st.caption("Source: NPCI UPI Ecosystem Statistics")
     
         # Chart 4: Volume Share % over time
         fig_share_t = px.line(cat_df, x="month", y="volume_share_pct",
@@ -576,7 +576,7 @@ with tab_deepdive:
         style_plotly_fig(fig_share_t)
         st.plotly_chart(fig_share_t, use_container_width=True)
         # 6. Chart Footers
-        st.caption("Source: NPCI UPI Ecosystem Statistics + RBI DBIE Portal")
+        st.caption("Source: NPCI UPI Ecosystem Statistics")
         
     st.write("")
     
@@ -597,7 +597,7 @@ with tab_deepdive:
     style_plotly_fig(fig_overlay)
     st.plotly_chart(fig_overlay, use_container_width=True)
     # 6. Chart Footers
-    st.caption("Source: NPCI UPI Ecosystem Statistics + RBI DBIE Portal")
+    st.caption("Source: NPCI UPI Ecosystem Statistics")
 
 # Footer
 st.markdown("""
