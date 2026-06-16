@@ -448,13 +448,13 @@ def style_plotly_fig(fig):
         gridcolor="rgba(255, 255, 255, 0.05)",
         linecolor="rgba(255, 255, 255, 0.1)",
         tickfont=dict(color="#94A3B8"),
-        titlefont=dict(color="#F8FAFC")
+        title=dict(font=dict(color="#F8FAFC"))
     )
     fig.update_yaxes(
         gridcolor="rgba(255, 255, 255, 0.05)",
         linecolor="rgba(255, 255, 255, 0.1)",
         tickfont=dict(color="#94A3B8"),
-        titlefont=dict(color="#F8FAFC")
+        title=dict(font=dict(color="#F8FAFC"))
     )
     return fig
 
