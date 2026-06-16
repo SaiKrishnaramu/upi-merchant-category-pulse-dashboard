@@ -9,7 +9,6 @@ import datetime
 # Set page configuration to wide and premium title
 st.set_page_config(
     page_title="UPI Merchant Category Pulse",
-    page_icon="⚡",
     layout="wide",
     initial_sidebar_state="expanded"
 )
@@ -79,12 +78,6 @@ p, li, label { color: #7A8094 !important; }
     gap: 1rem;
 }
 
-.banner-icon {
-    font-size: 1.6rem;
-    line-height: 1;
-    margin-top: 0.1rem;
-}
-
 .banner-content {
     flex: 1;
 }
@@ -145,7 +138,6 @@ active_categories = latest_df["category"].nunique()
 with st.sidebar:
     st.markdown("""
     <div style="padding: 1rem 0; text-align: center;">
-        <span style="font-size: 2.5rem;">⚡</span>
         <h2 style="font-family: 'Outfit', sans-serif; font-weight: 700; color: #F8FAFC; margin-top: 0.5rem; margin-bottom: 0;">UPI Pulse</h2>
         <span style="color: #64748B; font-size: 0.85rem;">NPCI Merchant Category Analytics</span>
     </div>
@@ -173,7 +165,7 @@ Formula: Category 3M growth ÷ Network 3M growth
 """)
 
     st.markdown("""
-    ### 👤 Publisher
+    ### Publisher
     *Sai Krishna A Ramu*  
     *Portfolio Project*
     """)
@@ -238,9 +230,9 @@ def style_plotly_fig(fig):
 
 # ----------------- DASHBOARD TABS -----------------
 tab_overview, tab_leaderboard, tab_deepdive = st.tabs([
-    "📊 Network Overview & Insights", 
-    "🏆 Momentum Leaderboard", 
-    "🔍 Category Deep Dive"
+    "Network Overview & Insights", 
+    "Momentum Leaderboard", 
+    "Category Deep Dive"
 ])
 
 # ----------------- TAB 1: OVERVIEW & INSIGHT CARDS -----------------
@@ -248,7 +240,7 @@ with tab_overview:
     col_left, col_right = st.columns([13, 11])
     
     with col_left:
-        st.markdown("### 📈 Aggregated P2M Ecosystem Trend")
+        st.markdown("### Aggregated P2M Ecosystem Trend")
         
         overall_df = df.groupby("month").agg({
             "volume": "sum",
@@ -330,7 +322,7 @@ with tab_overview:
         st.caption("Source: NPCI UPI Ecosystem Statistics + RBI DBIE Portal")
         
     with col_right:
-        st.markdown("### 💡 Key Spending Insights")
+        st.markdown("### Key Spending Insights")
         
         # Calculate specific metrics for insights dynamically
         travel_latest = latest_df[latest_df["category"] == "Travel & Transport"]
@@ -355,19 +347,19 @@ with tab_overview:
 
         st.markdown(f"""
         <div class="insight-card travel">
-            <div class="insight-title">✈️ Travel Outpacing Overall Network</div>
+            <div class="insight-title">Travel Outpacing Overall Network</div>
             <div class="insight-body">Travel & hospitality spending is the core growth engine, growing <b>{travel_ms_3m:.1f}x faster</b> than the overall P2M network. It also boasts the highest transaction size (<b>₹{travel_avg_ticket:,.0f}</b>) among all tracked categories.</div>
             <div class="insight-source">Source: NPCI UPI Ecosystem Statistics, {latest_month.strftime('%b %Y')}</div>
         </div>
         
         <div class="insight-card grocery">
-            <div class="insight-title">🛒 Grocery Commoditization (Micro-Tickets)</div>
+            <div class="insight-title">Grocery Commoditization (Micro-Tickets)</div>
             <div class="insight-body">Grocery represents the highest overall volume share, but its average ticket size has dropped <b>{grocery_ticket_drop_pct:.0f}%</b> (from ₹{grocery_ticket_start:.0f} to ₹{grocery_ticket_end:.0f}), signaling extensive penetration of small basket values into local kiranas.</div>
             <div class="insight-source">Source: NPCI UPI Statistics</div>
         </div>
         
         <div class="insight-card insurance">
-            <div class="insight-title">🛡️ Insurance & Financial Services Surging</div>
+            <div class="insight-title">Insurance & Financial Services Surging</div>
             <div class="insight-body">Financial services are growing off a small base with a high momentum of <b>{ins_ms_3m:.2f}</b>. However, overall volume share remains low at <b>{ins_share:.1f}%</b>, indicating significant untapped addressable market remaining.</div>
             <div class="insight-source">Source: NPCI UPI Statistics, {latest_month.strftime('%b %Y')}</div>
         </div>
@@ -375,7 +367,7 @@ with tab_overview:
 
 # ----------------- TAB 2: LEADERBOARD -----------------
 with tab_leaderboard:
-    st.markdown("### 🏆 Category Velocity Leaderboard")
+    st.markdown("### Category Velocity Leaderboard")
     
     f_col1, f_col2 = st.columns(2)
     with f_col1:
@@ -456,7 +448,7 @@ with tab_leaderboard:
 
 # ----------------- TAB 3: CATEGORY DEEP DIVE -----------------
 with tab_deepdive:
-    st.markdown("### 🔍 Merchant Category Deep Dive")
+    st.markdown("### Merchant Category Deep Dive")
     
     all_categories = sorted(df["category"].unique())
     selected_category = st.selectbox("Select a Merchant Category for Granular Analysis", all_categories, index=0)
@@ -489,7 +481,6 @@ with tab_deepdive:
             
         st.markdown(f"""
         <div class="insight-banner">
-            <div class="banner-icon">💡</div>
             <div class="banner-content">
                 <div class="banner-title">Category Intelligence Summary</div>
                 <div class="banner-body">{highlight_msg}</div>
@@ -589,7 +580,7 @@ with tab_deepdive:
         
     st.write("")
     
-    # 🔄 YoY Seasonal Overlay Comparison
+    # YoY Seasonal Overlay Comparison
     cat_df["year"] = cat_df["month"].dt.year
     cat_df["month_num"] = cat_df["month"].dt.month
     cat_df["month_name"] = cat_df["month"].dt.strftime("%b")
@@ -611,7 +602,7 @@ with tab_deepdive:
 # Footer
 st.markdown("""
 <div style="text-align: center; color: #64748B; font-size: 0.85rem; margin-top: 3.5rem; border-top: 1px solid rgba(255, 255, 255, 0.08); padding-top: 1.5rem;">
-    📊 <b>UPI Merchant Category Pulse Dashboard</b> | Sourced from official NPCI UPI Ecosystem Statistics.<br>
+    <b>UPI Merchant Category Pulse Dashboard</b> | Sourced from official NPCI UPI Ecosystem Statistics.<br>
     Created by <i>Sai Krishna A Ramu</i> as a Portfolio Project.
 </div>
 """, unsafe_allow_html=True)
