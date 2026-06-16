@@ -1,0 +1,318 @@
+
+PRODUCT REQUIREMENTS DOCUMENT
+UPI Merchant CategoryPulse Dashboard
+Identifying which spending categories are growing faster than UPI itself
+
+Author
+Sai Krishna A Ramu
+Version
+1.0
+Document Type
+Portfolio Project PRD
+Target Roles
+Data Analyst, Business Analyst
+Date
+June 2026
+Status
+Ready for Development
+
+1. Project Overview
+1.1 Executive Summary
+UPI Merchant Category Pulse Dashboard is a data analytics portfolio project that surfaces consumer spending trends from India's payments ecosystem using publicly available NPCI and RBI data. The dashboard tracks which merchant categories are growing faster than the UPI network overall — delivering the kind of macro consumer insight that fintech product, risk, and strategy teams produce internally.
+The project is designed to serve two audiences simultaneously: a recruiter or hiring manager evaluating analytical depth, and a business stakeholder needing a clear, actionable view of spending momentum across categories.
+1.2 Problem Statement
+The Business QuestionUPI crossed 228 billion transactions in 2025 — but aggregate numbers hide the real story. Which merchant categories are outpacing the network? Where is consumer spending shifting? Which categories are declining in average ticket size even as volume grows? This dashboard answers those questions from official government data, with no proprietary access required.
+1.3 Project Goals
+Primary: Build a live, interactive dashboard deployed on Streamlit Cloud with a public URL
+Surface a Momentum Score metric that identifies categories growing faster than UPI overall
+Tell a data-driven business story in the README with 4–5 non-obvious findings
+Demonstrate end-to-end analytical workflow: ingestion → cleaning → metric design → visualization → deployment
+Secondary: Demonstrate business storytelling ability beyond dashboarding
+Showcase familiarity with Indian fintech ecosystem — relevant for CCIL, PhonePe, Razorpay, and similar roles
+Add a third distinct project archetype to the portfolio (macro/trend analysis, complementing existing churn prediction and SQL analytics work)
+1.4 Success Metrics
+Metric
+Target
+Why It Matters
+Live dashboard URL
+Deployed on Streamlit Cloud
+Rare on fresher resumes — immediate credibility signal
+Months of data covered
+Min. 24 months (Jan 2023–Dec 2024)
+Enough history for meaningful trend analysis
+Merchant categories tracked
+15+ MCC categories
+Breadth shows comprehensive analysis
+Non-obvious insights documented
+4–5 findings in README
+This is the portfolio differentiator
+Resume bullet quantification
+At least 2 specific numbers
+Passes 6-second resume scan
+
+2. Data Sources & Architecture
+2.1 Primary Data Sources
+Source
+What It Contains
+Format
+Access
+NPCI UPI Ecosystem Statistics
+Monthly MCC-category-wise volume & value of P2M transactions
+Excel / CSV
+Free, public. npci.org.in → UPI Ecosystem Stats
+NPCI Archives
+Historical monthly files going back 2–3 years
+Excel / CSV
+Same page → Archives tab
+RBI DBIE Portal
+Overall UPI monthly volume & value totals (baseline for Momentum Score)
+CSV / XLSX
+Free. dbie.rbi.org.in
+2.2 Folder Structure
+upi-pulse/├── data/│   ├── raw/             ← NPCI monthly Excel files as downloaded│   └── processed/       ← cleaned, merged master CSV├── notebooks/│   ├── 01_cleaning.ipynb│   ├── 02_eda.ipynb│   └── 03_momentum_score.ipynb├── app/│   └── dashboard.py     ← Streamlit app (single file)├── README.md            ← Story-first: Problem → Data → Insights → Recommendations└── requirements.txt
+2.3 Data Schema
+After cleaning and stacking all monthly files, the master dataframe will have the following structure:
+Column
+Type
+Example
+Notes
+month
+datetime
+2024-03-01
+Normalised to first of month
+category
+string
+Grocery
+Standardised — NPCI changes labels across files
+volume
+int64
+1,204,500,000
+Number of approved transactions
+value_cr
+float64
+8042.50
+Transaction value in crore INR
+avg_ticket
+float64
+668.12
+Derived: (value_cr × 10,000,000) / volume
+mom_pct
+float64
+0.073
+Month-over-month % change in volume
+momentum_score
+float64
+2.41
+Category 3M growth / overall UPI 3M growth. > 1 = outpacing
+
+3. Metrics & Analytical Design
+3.1 The Momentum Score
+Core Metric DefinitionMomentum Score = (Category 3-month volume CAGR) ÷ (Overall UPI 3-month volume CAGR)A score > 1.0 means the category is growing faster than the UPI network as a whole. A score < 1.0 means it is lagging. This single number is the hook — it answers the business question directly and is simple enough to explain in 30 seconds in an interview.
+3.2 Supporting Metrics
+Metric
+Formula / Method
+Business Meaning
+Volume Share %
+category_volume / total_volume × 100
+Category's share of the UPI pie each month
+YoY Growth Rate
+(this month – same month last year) / same month last year
+Removes seasonal noise for fair comparison
+Avg Ticket Trend
+Rolling 3-month avg of avg_ticket
+Is the category premiumising or commoditising?
+Seasonality Index
+Month's volume / trailing 12-month avg
+Identifies festive spikes (Oct-Nov) vs. off-season dips
+Volume Share Shift
+Current 3M share – same 3M prior year
+Which categories are gaining / losing wallet share
+3.3 Expected Key Insights
+Based on publicly available UPI data, these are the hypotheses to validate or disprove in the analysis. Each finding should appear as an Insight Card in the dashboard.
+#
+Hypothesis
+Expected Finding
+Business Relevance
+1
+Travel & hospitality is outpacing UPI growth post-2023
+Momentum Score > 2.0 for Travel
+Relevant to OTAs, hotels, airline payment teams
+2
+Grocery avg ticket size declining even as volume grows
+Avg ticket drops from ~₹800 to ~₹600 over 24 months
+UPI penetrating smaller basket sizes — kirana adoption
+3
+Insurance and financial services growing off a small base
+Momentum Score high but volume share still under 5%
+Signals early-stage category penetration
+4
+Education payments spike in May–July (admission season)
+Seasonality Index > 1.4 in June–July
+Useful for EdTech and institutional payment planning
+5
+Utilities have high volume but declining momentum
+Mature category — Momentum Score near or below 1.0
+Shows that not all UPI growth is broad-based
+
+4. Dashboard Design & Features
+4.1 Dashboard Sections
+Section A — Market Overview
+Dual-axis line chart: overall UPI volume (left axis) and value in ₹ crore (right axis), Jan 2022 – latest month
+Annotated with key events: COVID recovery, festive seasons (Oct–Nov), RBI policy changes
+Summary KPI cards: Total volume (latest month), YoY growth %, avg ticket size, number of active categories
+Section B — Category Momentum Leaderboard
+Horizontal bar chart of all categories ranked by Momentum Score, colour-coded: green (> 1.5), amber (0.8–1.5), red (< 0.8)
+Time window filter: 3-month / 6-month / 12-month trailing window
+Toggle: rank by Momentum Score vs. absolute volume vs. YoY growth
+Section C — Category Deep Dive
+Dropdown to select any category
+Four sub-charts: monthly volume trend, monthly value trend, avg ticket size trend, volume share % over time
+YoY comparison overlay: current year vs. prior year (same category)
+Auto-generated plain-English summary: e.g., 'Travel grew 2.4x faster than UPI in the last 6 months. Avg ticket size is ₹3,200 — the highest across all categories.'
+Section D — Insight Cards
+4–5 static cards with the non-obvious findings, displayed prominently
+Each card: Finding headline + 1-sentence explanation + data source callout
+Example: 'Grocery is UPI's volume engine, but it's shrinking per-transaction — avg ticket dropped 22% in 2 years as kirana adoption expands.'
+4.2 UI/UX Principles
+Principle
+Implementation
+Story-first
+Insight Cards section appears above the charts — the business finding is the hero, not the data
+No clutter
+Maximum 4 charts visible at once. Use tabs/expanders for secondary views
+Data trust
+Footer on every chart: 'Source: NPCI UPI Ecosystem Statistics, [month year]' — builds credibility
+Mobile-friendly
+Streamlit's default layout works on mobile — avoid wide tables as primary views
+
+5. Development Plan
+5.1 Three-Week Timeline
+Week
+Phase
+Deliverables
+Output
+Week 1
+Data Ingestion & Cleaning
+Download all NPCI monthly files, standardise column names and category labels, stack into master CSV, handle nulls and inconsistencies, compute avg_ticket_size
+01_cleaning.ipynb + processed/master.csv
+Week 2
+EDA & Metric Engineering
+Compute Momentum Score, YoY growth, seasonality index, volume share shift. Generate exploratory charts. Document 4–5 findings with supporting numbers
+02_eda.ipynb + 03_momentum_score.ipynb
+Week 3
+Dashboard Build & Deploy
+Build Streamlit app (4 sections), deploy to Streamlit Cloud, write README with story structure, finalize resume bullet, add live link to resume & GitHub
+Live URL + GitHub repo + updated resume
+5.2 Tech Stack
+Layer
+Tool
+Purpose
+Data Wrangling
+pandas, openpyxl
+Read NPCI Excel files, clean, stack, compute derived columns
+Analysis
+pandas, scipy
+Momentum Score, rolling averages, seasonality index, trend lines
+Visualisation
+plotly.express
+Interactive charts (line, bar, dual-axis) with hover details
+Dashboard
+streamlit
+Web app framework — single Python file, easy deploy
+Deployment
+Streamlit Cloud (free tier)
+Public URL, no server management, GitHub-integrated deploy
+Version Control
+GitHub
+Public repo — interviewers can inspect the code and notebooks
+5.3 Known Risks & Mitigations
+Risk
+Likelihood
+Mitigation
+NPCI changes category label names across monthly files
+High — confirmed
+Build a category_mapping dict in cleaning notebook. Document all aliases. This becomes a talking point: real messy data experience.
+Some months missing from NPCI archives
+Medium
+Use linear interpolation for single missing months. Flag in README. Focus insights on categories with complete series.
+Streamlit Cloud free tier goes to sleep after inactivity
+Low impact
+Cache data with @st.cache_data. App wakes in <20 seconds. Note this on the resume as: 'deployed with caching for performance'.
+Insights not as dramatic as expected
+Low
+The YoY comparison and volume share shift metrics almost always surface something interesting regardless of category behaviour.
+
+6. README & Portfolio Presentation
+6.1 README Structure
+The README is as important as the code. It is the first thing a hiring manager reads after clicking the GitHub link. It must follow a story structure, not a technical spec.
+1. The problem — one paragraph on why aggregate UPI numbers hide the real consumer story
+2. Data sources — NPCI and RBI links, brief note on cleaning challenges (category label drift)
+3. Methodology — plain-English explanation of Momentum Score with a worked example
+4. Key Insights — 4–5 findings, each with a chart screenshot and a one-sentence business implication
+5. Business Recommendations — 2–3 actionable suggestions (e.g., 'Travel-adjacent fintechs should prioritise Q4 UPI checkout optimisation')
+6. How to run locally — three commands max
+7. Live demo link — top of README, not buried at the bottom
+6.2 Resume Bullet (Final)
+Copy-paste ready for your resume"Built an end-to-end UPI merchant category analytics dashboard on NPCI/RBI public data (2022–2025); engineered a Momentum Score metric that identified Travel and Insurance as the fastest-growing P2M categories, outpacing overall UPI growth by 2.4x — surfacing insights relevant to fintech product and risk teams."
+6.3 Interview Talking Points
+Interview Question
+Talking Point
+Walk me through a project.
+Lead with the business question. Then: data source, the Momentum Score metric I invented, and the Travel insight. End with the live URL.
+What was the hardest part?
+NPCI changes category label names across monthly files — 'Food & Beverages' vs. 'F&B' vs. 'Food Delivery'. Building the mapping dictionary and validating totals took most of Week 1.
+What would you do next?
+Layer Google Trends data for the same categories to see if search intent leads transaction volume by 1–2 months. That would make the dashboard a leading indicator, not just a lagging report.
+Why this dataset specifically?
+It's official regulatory data, fully public, and directly relevant to how payments and fintech companies think about market sizing. I wanted a project where the data source itself adds credibility.
+
+7. Out of Scope
+The following are explicitly excluded from v1.0 to keep the project completable in 2–3 weeks:
+ML forecasting model — adding ARIMA or Prophet to predict next-month category volumes. This can be a v2 extension mentioned in the README.
+Google Trends enrichment — correlating search volume with UPI transactions. A strong 'what's next' talking point but not in scope.
+State-level analysis — RBI does publish state-wise UPI data. Excluded because it requires a separate data pipeline and adds scope without proportional portfolio value.
+Real-time data refresh — NPCI data is monthly; the dashboard will update monthly via a manual data refresh, not automated.
+User authentication or personalisation — this is a public portfolio project, not a SaaS product.
+
+8. Appendix
+8.1 Key URL References
+NPCI UPI Ecosystem Statistics: https://www.npci.org.in/what-we-do/upi/upi-ecosystem-statistics
+NPCI Archives: https://www.npci.org.in/what-we-do/upi/upi-ecosystem-statistics/archives
+RBI DBIE Portal: https://dbie.rbi.org.in
+Streamlit Cloud deployment: https://streamlit.io/cloud
+8.2 Category Label Mapping Reference
+The following is a starter mapping to standardise NPCI category labels across monthly files. This list should be expanded as files are downloaded.
+Raw Label (from NPCI file)
+Standardised Label
+Food & Beverages
+Food & Beverages
+F&B
+Food & Beverages
+Food Delivery
+Food & Beverages
+Travel
+Travel & Transport
+Travel & Transport
+Travel & Transport
+Hotels & Travel
+Travel & Transport
+Grocery
+Grocery & Supermarkets
+Grocery/Supermarkets
+Grocery & Supermarkets
+Utilities
+Utilities & Bill Payment
+Bill Payment
+Utilities & Bill Payment
+Education
+Education
+EdTech
+Education
+Insurance
+Insurance & Financial Services
+Financial Services
+Insurance & Financial Services
+Healthcare
+Healthcare & Pharmacy
+Pharmacy
+Healthcare & Pharmacy
