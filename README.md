@@ -1,6 +1,6 @@
 # ⚡ UPI Merchant Category Pulse Dashboard
 
-> **Live Demo:** [Deploy on Streamlit Cloud](https://streamlit.io/cloud) *(Insert your deployed Streamlit App URL here)*
+> **Live Demo:**  *(https://upi-dashboard.streamlit.app/)*
 
 An end-to-end P2M (Person-to-Merchant) transaction analytics dashboard that surfaces micro-consumer spending trends in India's payment ecosystem. It identifies which retail spending categories are outgrowing the overall UPI network.
 
